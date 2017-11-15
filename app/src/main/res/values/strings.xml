@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MioApp</string>
+    <string name="title_activity_live_view">Map</string>
 </resources>

@@ -1,22 +1,22 @@
 package Modelo;
 
 /**
- * Created by aburr on 16/11/2017.
+ * Created by jncv17 on 16/11/2017.
  */
 
 public class Service {
-    private String service_id;
+    private Service service;
 
-    public Service(String service_id) {
-        this.service_id = service_id;
+    public Service(Service service) {
+        this.service = service;
     }
 
-    public String getService_id() {
-        return service_id;
+    public Service getService() {
+        return service;
     }
 
-    public void setService_id(String service_id) {
-        this.service_id = service_id;
+    public void setService(Service service) {
+        this.service = service;
     }
 
 

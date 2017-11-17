@@ -12,14 +12,16 @@ public class Agency {
     private String agency_language;
     private String agency_phone;
     private String agency_email;
+    private Route[] routes;
 
-    public Agency(String agency_name, String agency_url, String agency_timezone, String agency_language, String agency_phone, String agency_email) {
+    public Agency(String agency_name, String agency_url, String agency_timezone, String agency_language, String agency_phone, String agency_email, Route[] routes) {
         this.agency_name = agency_name;
         this.agency_url = agency_url;
         this.agency_timezone = agency_timezone;
         this.agency_language = agency_language;
         this.agency_phone = agency_phone;
         this.agency_email = agency_email;
+        this.routes = routes;
     }
 
     public String getAgency_name() {
@@ -69,4 +71,14 @@ public class Agency {
     public void setAgency_email(String agency_email) {
         this.agency_email = agency_email;
     }
+
+    public Route[] getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(Route[] routes) {
+        this.routes = routes;
+    }
+
+
 }

@@ -1,20 +1,20 @@
 package Modelo;
 
 /**
- * Created by aburr on 16/11/2017.
+ * Created by jncv17 on 16/11/2017.
  */
 
 public class Route {
 
-    private String route_id;
+    private Route route;
     private String route_short_name;
     private String route_long_name;
     private String route_type;
     private String route_color;
     private String route_text_color;
 
-    public Route(String route_id, String route_short_name, String route_long_name, String route_type, String route_color, String route_text_color) {
-        this.route_id = route_id;
+    public Route(Route route, String route_short_name, String route_long_name, String route_type, String route_color, String route_text_color) {
+        this.route = route;
         this.route_short_name = route_short_name;
         this.route_long_name = route_long_name;
         this.route_type = route_type;
@@ -22,12 +22,12 @@ public class Route {
         this.route_text_color = route_text_color;
     }
 
-    public String getRoute_id() {
-        return route_id;
+    public Route getRoute() {
+        return route;
     }
 
-    public void setRoute_id(String route_id) {
-        this.route_id = route_id;
+    public void setRoute(Route route) {
+        this.route = route;
     }
 
     public String getRoute_short_name() {

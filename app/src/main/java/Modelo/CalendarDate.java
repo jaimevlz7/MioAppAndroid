@@ -1,27 +1,27 @@
 package Modelo;
 
 /**
- * Created by aburr on 16/11/2017.
+ * Created by jncv17 on 16/11/2017.
  */
 
 public class CalendarDate {
-    private String service_id;
+    private Service[] service;
     private String date;
 
-    public CalendarDate(String service_id, String date, String exception_type) {
-        this.service_id = service_id;
+    public CalendarDate(Service[] service, String date, String exception_type) {
+        this.service = service;
         this.date = date;
         this.exception_type = exception_type;
     }
 
     private String exception_type;
 
-    public String getService_id() {
-        return service_id;
+    public Service[] getService() {
+        return service;
     }
 
-    public void setService_id(String service_id) {
-        this.service_id = service_id;
+    public void setService(Service[] service_id) {
+        this.service = service_id;
     }
 
     public String getDate() {

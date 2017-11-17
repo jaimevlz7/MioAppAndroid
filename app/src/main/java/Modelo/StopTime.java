@@ -1,20 +1,20 @@
 package Modelo;
 
 /**
- * Created by aburr on 16/11/2017.
+ * Created by jncv17 on 16/11/2017.
  */
 
 public class StopTime {
 
     private String arrival_time;
-    private String stop_id;
+    private Stop stop;
     private StopTime[] stop_sequence;
     private String stop_headsign;
 
-    public StopTime(String trip_id, String arrival_time, String stop_id, StopTime[] stop_sequence, String stop_headsign) {
+    public StopTime(String trip_id, String arrival_time, Stop stop, StopTime[] stop_sequence, String stop_headsign) {
         this.trip_id = trip_id;
         this.arrival_time = arrival_time;
-        this.stop_id = stop_id;
+        this.stop = stop;
         this.stop_sequence = stop_sequence;
         this.stop_headsign = stop_headsign;
     }
@@ -37,12 +37,12 @@ public class StopTime {
         this.arrival_time = arrival_time;
     }
 
-    public String getStop_id() {
-        return stop_id;
+    public Stop getStop() {
+        return stop;
     }
 
-    public void setStop_id(String stop_id) {
-        this.stop_id = stop_id;
+    public void setStop(Stop stop_id) {
+        this.stop = stop_id;
     }
 
     public StopTime[] getStop_sequence() {

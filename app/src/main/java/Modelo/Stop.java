@@ -1,7 +1,7 @@
 package Modelo;
 
 /**
- * Created by aburr on 16/11/2017.
+ * Created by jncv17 on 16/11/2017.
  */
 
 public class Stop {
@@ -13,8 +13,9 @@ public class Stop {
     private String location_type;
     private String parent_station;
     private String platform_code;
+    private StopTime[] stopTimes;
 
-    public Stop(String stop_id, String stop_name, String stop_lat, String stop_long, String location_type, String parent_station, String platform_code) {
+    public Stop(String stop_id, String stop_name, String stop_lat, String stop_long, String location_type, String parent_station, String platform_code, StopTime[] stopTimes) {
         this.stop_id = stop_id;
         this.stop_name = stop_name;
         this.stop_lat = stop_lat;
@@ -22,6 +23,17 @@ public class Stop {
         this.location_type = location_type;
         this.parent_station = parent_station;
         this.platform_code = platform_code;
+        this.stopTimes = stopTimes;
+        ;
+    }
+
+
+    public StopTime[] getStopTimes() {
+        return stopTimes;
+    }
+
+    public void setStopTimes(StopTime[] stopTimes) {
+        this.stopTimes = stopTimes;
     }
 
 

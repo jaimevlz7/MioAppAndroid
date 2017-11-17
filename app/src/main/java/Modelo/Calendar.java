@@ -1,12 +1,12 @@
 package Modelo;
 
 /**
- * Created by aburr on 16/11/2017.
+ * Created by jncv17 on 16/11/2017.
  */
 
 public class Calendar {
 
-    private String service_id;
+    private Service service;
     private boolean monday;
     private boolean tuesday;
     private boolean wednesday;
@@ -17,8 +17,8 @@ public class Calendar {
     private String start_date;
     private String end_date;
 
-    public Calendar(String service_id, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday, String start_date, String end_date) {
-        this.service_id = service_id;
+    public Calendar(Service service, boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday, String start_date, String end_date) {
+        this.service = service;
         this.monday = monday;
         this.tuesday = tuesday;
         this.wednesday = wednesday;
@@ -30,12 +30,12 @@ public class Calendar {
         this.end_date = end_date;
     }
 
-    public String getService_id() {
-        return service_id;
+    public Service getService() {
+        return service;
     }
 
-    public void setService_id(String service_id) {
-        this.service_id = service_id;
+    public void setService(Service service) {
+        this.service = service;
     }
 
     public boolean isMonday() {

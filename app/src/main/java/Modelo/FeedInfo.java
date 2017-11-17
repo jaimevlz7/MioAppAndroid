@@ -1,7 +1,7 @@
 package Modelo;
 
 /**
- * Created by aburr on 16/11/2017.
+ * Created by jncv17 on 16/11/2017.
  */
 
 public class FeedInfo {
@@ -12,14 +12,24 @@ public class FeedInfo {
     private String feed_start_date;
     private String feed_end_date;
     private String feed_version;
+    private Trip trip;
 
-    public FeedInfo(String feed_publisher_name, String feed_publisher_url, String feed_lang, String feed_start_date, String feed_end_date, String feed_version) {
+    public FeedInfo(String feed_publisher_name, String feed_publisher_url, String feed_lang, String feed_start_date, String feed_end_date, String feed_version, Trip trip) {
         this.feed_publisher_name = feed_publisher_name;
         this.feed_publisher_url = feed_publisher_url;
         this.feed_lang = feed_lang;
         this.feed_start_date = feed_start_date;
         this.feed_end_date = feed_end_date;
         this.feed_version = feed_version;
+        this.trip = trip;
+    }
+
+    public Trip getTrip() {
+        return trip;
+    }
+
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
 
     public String getFeed_publisher_name() {

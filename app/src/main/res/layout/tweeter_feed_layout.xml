@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/authorImg_load"
+        android:layout_width="69dp"
+        android:layout_height="70dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rectangle"
+        android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.08"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/explore_dummie" />
+
+    <TextView
+        android:id="@+id/date_load"
+
+        android:layout_width="97dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="15dip"
+        android:paddingRight="10dip"
+        android:paddingTop="2dip"
+        android:text="12/07/17"
+        app:layout_constraintEnd_toEndOf="@+id/authorImg_load"
+        app:layout_constraintStart_toStartOf="@+id/authorImg_load"
+        app:layout_constraintTop_toBottomOf="@+id/author_load" />
+
+    <TextView
+        android:id="@+id/content_load"
+
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="15dip"
+        android:paddingRight="10dip"
+        android:paddingTop="2dip"
+        android:text="MyTittleDance"
+        app:layout_constraintBottom_toBottomOf="@+id/date_load"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/authorImg_load"
+        app:layout_constraintTop_toTopOf="@+id/authorImg_load" />
+
+    <TextView
+        android:id="@+id/author_load"
+
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="10dip"
+        android:paddingRight="15dip"
+        android:paddingTop="2dip"
+        android:text="John Doe"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/authorImg_load"
+        app:layout_constraintStart_toStartOf="@+id/authorImg_load"
+        app:layout_constraintTop_toBottomOf="@+id/authorImg_load" />
+
+</android.support.constraint.ConstraintLayout>

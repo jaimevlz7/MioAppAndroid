@@ -1,14 +1,13 @@
-package com.mio.app.mioapp;
+package com.mio.app.mioapp.views;
 
 import android.content.Intent;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+
+import com.mio.app.mioapp.R;
 
 public class MainActivity extends AppCompatActivity {
 

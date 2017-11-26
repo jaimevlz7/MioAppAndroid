@@ -39,14 +39,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goToLiveView(){
-        int timer = 1000;
-        while (System.currentTimeMillis()-startTime<timer) {
+        int timer = 100;
+        //while (System.currentTimeMillis()-startTime<timer) {
 
-            if (System.currentTimeMillis() - startTime >= timer) {
+           // if (System.currentTimeMillis() - startTime >= timer) {
                 Intent intent = new Intent(this, live_view.class);
                 startActivity(intent);
 
-            }
-        }
+          //  }
+       // }
     }
 }

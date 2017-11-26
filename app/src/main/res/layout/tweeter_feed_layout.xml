@@ -12,7 +12,6 @@
         android:layout_height="70dp"
         android:layout_marginBottom="32dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/rectangle"
         android:scaleType="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.08"
@@ -20,7 +19,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/explore_dummie" />
+        app:srcCompat="@drawable/log_mio_" android:contentDescription="Author Image"/>
 
     <TextView
         android:id="@+id/date_load"
@@ -30,7 +29,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:paddingLeft="15dip"
+        android:paddingStart="15dip"
         android:paddingRight="10dip"
         android:paddingTop="2dip"
         android:text="12/07/17"
@@ -47,7 +46,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:paddingLeft="15dip"
+        android:paddingStart="15dip"
         android:paddingRight="10dip"
         android:paddingTop="2dip"
         android:text="MyTittleDance"

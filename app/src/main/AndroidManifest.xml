@@ -45,7 +45,7 @@
             android:name=".views.live_view"
             android:label="@string/title_activity_live_view" />
         <activity android:name=".views.live_view2" />
-        <activity android:name=".views.News"></activity>
+        <activity android:name=".views.News" />
     </application>
 
 </manifest>

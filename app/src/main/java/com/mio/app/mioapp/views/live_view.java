@@ -22,8 +22,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.mio.app.mioapp.R;
+import com.mio.app.mioapp.control.GetLiveData;
 import com.mio.app.mioapp.control.ReadPuntosRecarga;
 import com.mio.app.mioapp.model.PuntoRecarga;
+import com.mio.app.mioapp.model.Ruta;
 
 import java.util.ArrayList;
 
@@ -31,7 +33,7 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
-
+    private GetLiveData liveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,19 +43,17 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        //Property for My Location
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        //Initializar Live Routes feed
+        liveData = new GetLiveData();
+
+
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -88,6 +88,9 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(me));
 
                             populatePuntoRecarga(location.getLatitude(), location.getLongitude());
+                            populateRoutes(location.getLatitude(), location.getLongitude());
+
+
 
                         }
                     }
@@ -123,6 +126,14 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
                 mMap.addMarker(new MarkerOptions().position(tempPosition).title(name).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
                 //Log.d("JAPO", "Punto Name: " + tempPoint.getNombre() + " - Latitud: " + lat + " - Longitud: " + lng);
             }
+        }
+    }
+
+    public void populateRoutes(double myLat, double myLng){
+        ArrayList<Ruta> rutas = liveData.getRutas();
+        for (int i = 0; i < rutas.size(); i++) {
+            mMap.addMarker(rutas.get(i).getMarker());
+            Log.d("LIVE", "populateRoutes: " + rutas.get(i).getId());
         }
     }
 }

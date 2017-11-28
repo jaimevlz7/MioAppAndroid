@@ -29,5 +29,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile group: 'com.google.transit', name: 'gtfs-realtime-bindings', version: '0.0.4'
+    compile 'com.twitter.sdk.android:twitter-core:3.1.1'
+    compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
+    compile 'com.twitter.sdk.android:tweet-composer:3.1.1'
+    compile 'com.twitter.sdk.android:twitter-mopub:3.1.1'
     testCompile 'junit:junit:4.12'
 }

@@ -22,10 +22,12 @@ public class GetLiveData extends Thread {
     private HttpURLConnection urlConnection;
     public ArrayList<Ruta> rutas;
     private String dirWeb = "http://190.216.202.35:90/gtfs/realtime/";
+    double myLat, myLng;
 
-
-    public GetLiveData() {
+    public GetLiveData(double _myLat, double _myLng) {
         rutas = new ArrayList<Ruta>();
+        myLat = _myLat;
+        myLng = _myLng;
         start();
 
     }
@@ -40,8 +42,9 @@ public class GetLiveData extends Thread {
 
         try {
             while (true) {
+                resetRutas();
                 clienteHttp();
-                sleep(20000);
+                sleep(50000);
             }
 
 
@@ -73,43 +76,48 @@ public class GetLiveData extends Thread {
             urlConnection = (HttpURLConnection) url.openConnection();
             GtfsRealtime.FeedMessage feed = GtfsRealtime.FeedMessage.parseFrom(url.openStream());
             urlConnection.disconnect();
-
+            double dist = 0.007;
             for (GtfsRealtime.FeedEntity entity : feed.getEntityList()) {
                 if (entity.hasVehicle()) {
-                    String id_Route = entity.getVehicle().getTrip().getRouteId();
+                    int id_Route = Integer.parseInt(entity.getVehicle().getTrip().getRouteId());
 
-                    Log.d("LIVE", "clienteHttp RouteId: " + id_Route);
 
-                    if (rutas != null && !rutas.isEmpty()) {
+                    if (myLat - entity.getVehicle().getPosition().getLatitude()< dist && myLat - entity.getVehicle().getPosition().getLatitude()> -dist &&
+                            myLng - entity.getVehicle().getPosition().getLongitude()< dist && myLng - entity.getVehicle().getPosition().getLongitude()> -dist) {
+                        Log.d("LIVE", "Is Near RouteId: " + id_Route);
+                        if (rutas != null && !rutas.isEmpty()) {
 
-                        for (int i = 0; i < rutas.size(); i++) {
+                            for (int i = 0; i < rutas.size(); i++) {
 
-                            if (id_Route.equals(rutas.get(i).getRoute_id())) {
-                                //Change new coordenates
-                                float latitud = entity.getVehicle().getPosition().getLatitude();
-                                float longitud = entity.getVehicle().getPosition().getLongitude();
-                                rutas.get(i).setNewLatLng(latitud, longitud);
-                               // Log.d("LIVE", "Route coordenates changed");
-                            } else {
-                                //Add new Route if it doesnt exists
-                                float latitud = entity.getVehicle().getPosition().getLatitude();
-                                float longitud = entity.getVehicle().getPosition().getLongitude();
+                                if (id_Route == rutas.get(i).getRoute_id()) {
+                                    //Change new coordenates
+                                    float latitud = entity.getVehicle().getPosition().getLatitude();
+                                    float longitud = entity.getVehicle().getPosition().getLongitude();
+                                    rutas.get(i).setNewLatLng(latitud, longitud);
+                                     Log.d("LIVE", "Route coordenates changed");
+                                } else {
+                                    //Add new Route if it doesnt exists
+                                    float latitud = entity.getVehicle().getPosition().getLatitude();
+                                    float longitud = entity.getVehicle().getPosition().getLongitude();
 
-                                Ruta n = new Ruta(latitud, longitud, id_Route);
-                                rutas.add(n);
-                                //Log.d("LIVE", "New Route Added");
+                                    Ruta n = new Ruta(latitud, longitud, id_Route);
+                                    rutas.add(n);
+                                    Log.d("LIVE", "New Route Added: " +rutas.size());
+                                }
+
                             }
+                        } else {
+                            //Add the first Route in the Arraylist
+                            float latitud = entity.getVehicle().getPosition().getLatitude();
+                            float longitud = entity.getVehicle().getPosition().getLongitude();
 
+                            Ruta n = new Ruta(latitud, longitud, id_Route);
+                            rutas.add(n);
+                            Log.d("LIVE1", "First Route Added to ArrayList");
                         }
-                    } else {
-                        //Add the first Route in the Arraylist
-                        float latitud = entity.getVehicle().getPosition().getLatitude();
-                        float longitud = entity.getVehicle().getPosition().getLongitude();
-
-                        Ruta n = new Ruta(latitud, longitud, id_Route);
-                        rutas.add(n);
-                        Log.d("LIVE", "First Route Added to ArrayList");
                     }
+                } else{
+                    //DONOTHING
                 }
             }
         } catch (MalformedURLException e) {
@@ -122,5 +130,11 @@ public class GetLiveData extends Thread {
             //body = e.toString();//Error diferente a los anteriores.
             e.printStackTrace();
         }
+        Log.d("LIVE2", "clienteHttp: GETTING THREAD ARRAYLIST "+ getRutas());
     }
+
+    public void resetRutas(){
+        rutas = new ArrayList<Ruta>();
+    }
+
 }

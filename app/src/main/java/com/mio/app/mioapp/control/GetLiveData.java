@@ -44,7 +44,7 @@ public class GetLiveData extends Thread {
             while (true) {
                 resetRutas();
                 clienteHttp();
-                sleep(50000);
+                sleep(10000);
             }
 
 

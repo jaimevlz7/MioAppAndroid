@@ -199,6 +199,7 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
                 //After adding marker
             }
         }
+        rutas = new ArrayList<Ruta>();
 
     }
 

@@ -1,8 +1,10 @@
 package com.mio.app.mioapp.views;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -32,11 +34,27 @@ public class MainActivity extends AppCompatActivity {
         set.setTarget(logo_splash);
         set.start();*/
 
+        new CountDownTimer(3000, 500) {
+
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.d("TICK", "onTick: ");
+            }
+
+            public void onFinish() {
+                goToLiveView();
+            }
+        }.start();
+
         Animation splash_intro = AnimationUtils.loadAnimation(this, R.anim.splash_object_intro);
         logo_splash.startAnimation(splash_intro);
 
-        goToLiveView();
+       // goToLiveView();
     }
+
+
+
 
     public void goToLiveView(){
         int timer = 100;

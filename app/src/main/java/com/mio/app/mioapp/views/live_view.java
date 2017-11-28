@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -46,6 +47,10 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
         MYLat = 0;
         LocationManager locationManager;
         rutas = new ArrayList<Ruta>();
+        createLoop();
+
+
+
         setContentView(R.layout.activity_live_view);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -69,10 +74,12 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
+                /*
                 mMap.clear();
                 populatePuntoRecarga(location.getLatitude(), location.getLongitude());
                 populateRoutes(location.getLatitude(), location.getLongitude());
                 Log.d("LOCATION", "onLocationChanged: ");
+                */
             }
 
             @Override
@@ -201,6 +208,29 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
         }
         rutas = new ArrayList<Ruta>();
 
+    }
+
+    public void createLoop(){
+        new CountDownTimer(5000, 1000) {
+
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+               // Log.d("TICK2", "onTick: ");
+            }
+
+            public void onFinish() {
+                feedHere();
+                Log.d("LIVE2", "Feeded");
+                createLoop();
+            }
+        }.start();
+    }
+
+    public void feedHere(){
+        mMap.clear();
+        populatePuntoRecarga(MYLat,MYLng);
+        populateRoutes(MYLat,MYLng);
     }
 
 }

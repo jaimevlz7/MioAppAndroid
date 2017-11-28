@@ -12,18 +12,17 @@ import com.mio.app.mioapp.R;
 public class Ruta {
     String id;
     double lat, lng, lat2, lng2;
-    int route_id;
+    String route_id;
     MarkerOptions marker;
 
-    public Ruta (String _id, double _lat, double _lng, int _route_id){
-        id = _id;
+    public Ruta (double _lat, double _lng, String _route_id){
         lat = _lat;
         lng = _lng;
         lat2 = _lat;
         lng2 = _lng;
         route_id = _route_id;
         LatLng tempLatLng = new LatLng(lat,lng);
-        marker = new MarkerOptions().position(tempLatLng).title(route_id+"").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
+        marker = new MarkerOptions().position(tempLatLng).title(route_id).icon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
     }
 
     public String getId() {
@@ -46,7 +45,7 @@ public class Ruta {
         return lng2;
     }
 
-    public int getRoute_id() {
+    public String getRoute_id() {
         return route_id;
     }
 
@@ -70,7 +69,7 @@ public class Ruta {
         this.lng2 = lng2;
     }
 
-    public void setRoute_id(int route_id) {
+    public void setRoute_id(String route_id) {
         this.route_id = route_id;
     }
 
@@ -83,6 +82,6 @@ public class Ruta {
         lng2=_lng;
 
         LatLng tempLatLng = new LatLng(lat2,lng2);
-        marker.position(tempLatLng).title(route_id+"").icon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
+        marker.position(tempLatLng).title(route_id).icon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
     }
 }

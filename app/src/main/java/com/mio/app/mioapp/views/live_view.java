@@ -34,6 +34,7 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationClient;
     private GetLiveData liveData;
+    private ArrayList<Ruta> rutas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
 
         //Initializar Live Routes feed
         liveData = new GetLiveData();
-
+        rutas = new ArrayList<Ruta>();
 
     }
 
@@ -82,9 +83,10 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
                         // Got last known location. In some rare situations this can be null.
                         if (location != null) {
                             // Logic to handle location object
+                            mMap.clear();
                             LatLng me = new LatLng(location.getLatitude(), location.getLongitude());
                             //mMap.addMarker(new MarkerOptions().position(me).title("ME!"));
-                            mMap.moveCamera(CameraUpdateFactory.zoomTo(17));
+                            mMap.moveCamera(CameraUpdateFactory.zoomTo(15));
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(me));
 
                             populatePuntoRecarga(location.getLatitude(), location.getLongitude());
@@ -113,7 +115,7 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
         Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
 
         puntosRecarga = readPuntos.obtenerPuntosRecarga(readPuntos.leer());
-        Log.d("JAPO", "populatePuntoRecargaSize: " + puntosRecarga.size());
+        //Log.d("JAPO", "populatePuntoRecargaSize: " + puntosRecarga.size());
         for (int i = 0; i < puntosRecarga.size(); i++) {
             PuntoRecarga tempPoint = puntosRecarga.get(i);
             double lng = tempPoint.getLatitud();
@@ -124,16 +126,27 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
             //Filtra la distancia de los puntos antes de Cargarlos al mapa
             if(myLat-lat < dist && myLat-lat>-dist && myLng-lng < dist && myLng-lng> -dist) {
                 mMap.addMarker(new MarkerOptions().position(tempPosition).title(name).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
-                //Log.d("JAPO", "Punto Name: " + tempPoint.getNombre() + " - Latitud: " + lat + " - Longitud: " + lng);
             }
         }
     }
 
     public void populateRoutes(double myLat, double myLng){
-        ArrayList<Ruta> rutas = liveData.getRutas();
-        for (int i = 0; i < rutas.size(); i++) {
-            mMap.addMarker(rutas.get(i).getMarker());
-            Log.d("LIVE", "populateRoutes: " + rutas.get(i).getId());
+
+        if(liveData.getRutas() != null && !liveData.getRutas().isEmpty()){
+            //If the array returned is not empty
+            rutas = liveData.getRutas();
+            Log.d("LIVE2", "populateRoutes: " + rutas.size());
+            for (int i = 0; i < rutas.size(); i++) {
+                LatLng tempPosition = new LatLng(rutas.get(i).getLat(), rutas.get(i).getLng() );
+                mMap.addMarker(new MarkerOptions().position(tempPosition));
+
+                //After adding marker
+
+
+            }
         }
+
     }
+
+
 }

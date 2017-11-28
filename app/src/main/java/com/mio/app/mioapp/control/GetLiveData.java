@@ -1,11 +1,11 @@
 package com.mio.app.mioapp.control;
 
+import android.util.Log;
+
+import com.google.transit.realtime.GtfsRealtime;
 import com.mio.app.mioapp.model.Ruta;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -15,57 +15,52 @@ import java.net.URL;
 import java.util.ArrayList;
 
 
-public class GetLiveData extends Thread{
+public class GetLiveData extends Thread {
 
 
     private String respuesta;
     private HttpURLConnection urlConnection;
     public ArrayList<Ruta> rutas;
+    private String dirWeb = "http://190.216.202.35:90/gtfs/realtime/";
+
+
     public GetLiveData() {
         rutas = new ArrayList<Ruta>();
         start();
 
     }
 
-    public ArrayList<Ruta> getRutas(){
+    public ArrayList<Ruta> getRutas() {
         return rutas;
     }
 
-    public String getRespuesta() {
-        return respuesta;
-    }
 
     public void run() {
         super.run();
 
         try {
             while (true) {
-                respuesta = clienteHttp("http://190.216.202.35:90/gtfs/realtime/");
-               // Log.d("LIVE TXT DATA", "GetLiveData: " + getRespuesta());
-                getLiveRoutes();
+                clienteHttp();
                 sleep(20000);
             }
 
 
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        catch (InterruptedException e){
+        } catch (InterruptedException e) {
             e.getStackTrace();
         }
     }
 
-    public String clienteHttp(String dirweb) throws IOException {
-
-        String body = " ";
+    public void clienteHttp() throws IOException {
 
         try {
 
-            URL url = new URL(dirweb);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            URL urlAuth = new URL("http://190.216.202.35:90/gtfs/realtime/");
+            HttpURLConnection urlConnection = (HttpURLConnection) urlAuth.openConnection();
             Integer codigoRespuesta = urlConnection.getResponseCode();
 
-            if(codigoRespuesta==HttpURLConnection.HTTP_UNAUTHORIZED){
+            if (codigoRespuesta == HttpURLConnection.HTTP_UNAUTHORIZED) {
                 Authenticator.setDefault(new Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication("appconcurso", "JcYbIry5sA".toCharArray());
@@ -73,63 +68,59 @@ public class GetLiveData extends Thread{
                 });
             }
 
-            url = new URL(dirweb+"vehiclePositions.pb.txt");
+            //URL url = new URL("http://japomedia.com/vehiclePositions.pb");
+            URL url = new URL("http", "190.216.202.35", 90, "/gtfs/realtime/vehiclePositions.pb");
             urlConnection = (HttpURLConnection) url.openConnection();
-            body = readStream(urlConnection.getInputStream());
-
-
+            GtfsRealtime.FeedMessage feed = GtfsRealtime.FeedMessage.parseFrom(url.openStream());
             urlConnection.disconnect();
+
+            for (GtfsRealtime.FeedEntity entity : feed.getEntityList()) {
+                if (entity.hasVehicle()) {
+                    String id_Route = entity.getVehicle().getTrip().getRouteId();
+
+                    Log.d("LIVE", "clienteHttp RouteId: " + id_Route);
+
+                    if (rutas != null && !rutas.isEmpty()) {
+
+                        for (int i = 0; i < rutas.size(); i++) {
+
+                            if (id_Route.equals(rutas.get(i).getRoute_id())) {
+                                //Change new coordenates
+                                float latitud = entity.getVehicle().getPosition().getLatitude();
+                                float longitud = entity.getVehicle().getPosition().getLongitude();
+                                rutas.get(i).setNewLatLng(latitud, longitud);
+                               // Log.d("LIVE", "Route coordenates changed");
+                            } else {
+                                //Add new Route if it doesnt exists
+                                float latitud = entity.getVehicle().getPosition().getLatitude();
+                                float longitud = entity.getVehicle().getPosition().getLongitude();
+
+                                Ruta n = new Ruta(latitud, longitud, id_Route);
+                                rutas.add(n);
+                                //Log.d("LIVE", "New Route Added");
+                            }
+
+                        }
+                    } else {
+                        //Add the first Route in the Arraylist
+                        float latitud = entity.getVehicle().getPosition().getLatitude();
+                        float longitud = entity.getVehicle().getPosition().getLongitude();
+
+                        Ruta n = new Ruta(latitud, longitud, id_Route);
+                        rutas.add(n);
+                        Log.d("LIVE", "First Route Added to ArrayList");
+                    }
+                }
+            }
         } catch (MalformedURLException e) {
-            body = e.toString(); //Error URL incorrecta
+            // body = e.toString(); //Error URL incorrecta
             e.printStackTrace();
-        } catch (SocketTimeoutException e){
-            body = e.toString(); //Error: Finalizado el timeout esperando la respuesta del servidor.
+        } catch (SocketTimeoutException e) {
+            // body = e.toString(); //Error: Finalizado el timeout esperando la respuesta del servidor.
             e.printStackTrace();
         } catch (Exception e) {
-            body = e.toString();//Error diferente a los anteriores.
+            //body = e.toString();//Error diferente a los anteriores.
             e.printStackTrace();
         }
-        return body;
-    }
-
-
-    private String readStream(InputStream in) throws IOException{
-
-        BufferedReader reader = null;
-        StringBuilder sb = null;
-        try {
-            reader = new BufferedReader(
-                    new InputStreamReader(in));
-            sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append("\n");
-            }
-            reader.close();
-            return sb.toString();
-        } catch (IOException e) {
-            //log the exception
-        }
-        return sb.toString();
-
-        /*
-        BufferedReader r = null;
-        r = new BufferedReader(new InputStreamReader(in));
-        StringBuilder total = new StringBuilder();
-        String line;
-        while ((line = r.readLine()) != null) {
-            total.append(line);
-        }
-        if(r != null){
-            r.close();
-        }
-        in.close();
-        return total.toString();
-        */
-    }
-
-
-    public void getLiveRoutes() {
-
     }
 }

@@ -228,7 +228,9 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
     }
 
     public void feedHere(){
-        mMap.clear();
+        if(mMap!= null) {
+            mMap.clear();
+        }
         populatePuntoRecarga(MYLat,MYLng);
         populateRoutes(MYLat,MYLng);
     }

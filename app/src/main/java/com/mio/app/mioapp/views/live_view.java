@@ -1,6 +1,8 @@
 package com.mio.app.mioapp.views;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,6 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -32,6 +35,11 @@ import com.mio.app.mioapp.control.GetLiveData;
 import com.mio.app.mioapp.control.ReadPuntosRecarga;
 import com.mio.app.mioapp.model.PuntoRecarga;
 import com.mio.app.mioapp.model.Ruta;
+import com.nightonke.boommenu.BoomButtons.ButtonPlaceAlignmentEnum;
+import com.nightonke.boommenu.BoomButtons.ButtonPlaceEnum;
+import com.nightonke.boommenu.BoomButtons.HamButton;
+import com.nightonke.boommenu.BoomButtons.OnBMClickListener;
+import com.nightonke.boommenu.BoomMenuButton;
 
 import java.util.ArrayList;
 
@@ -53,19 +61,73 @@ public class live_view extends FragmentActivity implements OnMapReadyCallback {
             new LatLng(-40, -168), new LatLng(71, 136));
     //vars
     private Boolean mLocationPermissionsGranted = false;
-
     public LocationManager locationManager;
+
+    public Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
+        setContentView(R.layout.activity_live_view);
+        BoomMenuButton bmb = (BoomMenuButton) findViewById(R.id.bmb1);
         MYLng = 0;
         MYLat = 0;
         LocationManager locationManager;
         rutas = new ArrayList<Ruta>();
         createLoop();
-        setContentView(R.layout.activity_live_view);
         getLocationPermission();
+
+        HamButton.Builder builder1 = new HamButton.Builder()
+                .normalImageRes(R.drawable.ic_traza_ruta)
+                .normalText("Planear ruta")
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        // When the boom-button corresponding this builder is clicked.
+                        Toast.makeText(live_view.this, "Clicked " + index, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        bmb.addBuilder(builder1);
+
+        HamButton.Builder builder2 = new HamButton.Builder()
+                .normalImageRes(R.drawable.ic_real_time)
+                .normalText("Ubicar Rutas")
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        // When the boom-button corresponding this builder is clicked.
+                        Toast.makeText(live_view.this, "Clicked " + index, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        bmb.addBuilder(builder2);
+
+        HamButton.Builder builder3 = new HamButton.Builder()
+                .normalImageRes(R.drawable.ic_noticias)
+                .normalText("Noticias")
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        // When the boom-button corresponding this builder is clicked.
+                        Toast.makeText(live_view.this, "Clicked " + index, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(live_view.this, TwitterActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                    }
+                });
+        bmb.addBuilder(builder3);
+
+        HamButton.Builder builder4 = new HamButton.Builder()
+                .normalImageRes(R.drawable.ic_puntos_recarga)
+                .normalText("Puntos de recarga")
+                .listener(new OnBMClickListener() {
+                    @Override
+                    public void onBoomButtonClick(int index) {
+                        // When the boom-button corresponding this builder is clicked.
+                        Toast.makeText(live_view.this, "Clicked " + index, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        bmb.addBuilder(builder4);
     }
 
     public void initMap(){

@@ -2,4 +2,9 @@
     <string name="app_name">MioApp</string>
     <string name="title_activity_live_view">Map</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_Slide">SlideMenu</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
 </resources>
